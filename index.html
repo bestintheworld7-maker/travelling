@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checklist Viaggi</title>
+    <style>
+        body {
+            background-color: white;
+            font-family: 'Arial', sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+            font-size: 32px;
+            margin-bottom: 40px;
+        }
+        .card-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+        .card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            padding: 40px 30px;
+            width: 300px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+            text-decoration: none;
+            color: white;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+        }
+        .card h2 {
+            font-size: 24px;
+            margin: 20px 0;
+        }
+        .card p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        .icon {
+            font-size: 60px;
+        }
+        .card-1 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-2 {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+    </style>
+</head>
+<body>
+    <h1>📋 Checklist per Viaggi</h1>
+    <p style="font-size: 18px; color: #7f8c8d;">Seleziona la checklist di cui hai bisogno</p>
+    
+    <div class="card-container">
+        <a href="preparazione-viaggio.html" class="card card-1">
+            <div class="icon">🗺️</div>
+            <h2>Preparazione Viaggio</h2>
+            <p>Controlli, prenotazioni, dispositivi e sicurezza</p>
+        </a>
+        
+        <a href="lista-viaggio.html" class="card card-2">
+            <div class="icon">🎒</div>
+            <h2>Lista Viaggio</h2>
+            <p>Valigia completa: abbigliamento, accessori e attrezzatura</p>
+        </a>
+    </div>
+</body>
+</html>
