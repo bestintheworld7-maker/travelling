@@ -1,275 +1,493 @@
-<!DOCTYPE html>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista Viaggio</title>
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
         body {
-            background-color: white;
-            font-family: 'Arial', sans-serif;
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             color: #333;
+            min-height: 100vh;
+            padding-bottom: 60px;
         }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            min-height: 100vh;
+            box-shadow: 0 0 30px rgba(0,0,0,0.3);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
         h1 {
-            text-align: center;
-            color: #2c3e50;
-            font-size: 28px;
-            border-bottom: 3px solid #e74c3c;
-            padding-bottom: 10px;
-            margin-bottom: 10px;
-        }
-        .subtitle {
-            text-align: center;
-            color: #7f8c8d;
-            font-size: 16px;
+            font-size: 24px;
             margin-bottom: 5px;
         }
-        .cities {
-            text-align: center;
-            color: #e74c3c;
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 25px;
+        
+        .subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 3px;
         }
+        
+        .cities {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        
+        button {
+            background-color: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+            padding: 10px 20px;
+            font-size: 14px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        button:hover, button:active {
+            background-color: white;
+            color: #f5576c;
+        }
+        
+        .back-link {
+            margin-top: 10px;
+        }
+        
+        .back-link a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 20px 15px;
+        }
+        
         .warning-box {
             background-color: #fff3cd;
             border: 2px solid #ffc107;
-            border-radius: 8px;
+            border-radius: 12px;
             padding: 15px;
-            margin: 20px 0;
+            margin: 15px 0 25px 0;
         }
+        
         .warning-box h2 {
             color: #856404;
-            margin-top: 0;
-            font-size: 20px;
+            font-size: 18px;
+            margin: 0 0 15px 0;
+            padding: 0;
+            background: none;
+            border: none;
         }
+        
         .warning-box ul {
-            margin-bottom: 0;
+            margin: 0;
         }
-        .warning-box li:before {
-            color: #856404 !important;
-        }
+        
         h2 {
-            color: #e74c3c;
-            font-size: 20px;
-            margin-top: 25px;
-            margin-bottom: 15px;
-            padding-left: 10px;
-            border-left: 5px solid #e74c3c;
+            color: #f5576c;
+            font-size: 18px;
+            margin: 25px 0 15px 0;
+            padding: 10px 15px;
+            background: linear-gradient(135deg, rgba(240, 147, 251, 0.1) 0%, rgba(245, 87, 108, 0.1) 100%);
+            border-radius: 10px;
+            border-left: 4px solid #f5576c;
         }
+        
         .section-icon {
             font-size: 20px;
             margin-right: 8px;
         }
+        
         ul {
             list-style-type: none;
-            padding-left: 0;
+            padding: 0;
+            margin: 0;
         }
+        
         li {
-            padding: 6px 0;
-            padding-left: 30px;
-            position: relative;
+            padding: 15px;
+            margin: 8px 0;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        li.completed {
+            opacity: 0;
+            height: 0;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+        
+        input[type="checkbox"] {
+            width: 24px;
+            height: 24px;
+            margin-right: 15px;
+            cursor: pointer;
+            flex-shrink: 0;
+            accent-color: #f5576c;
+        }
+        
+        label {
+            cursor: pointer;
+            user-select: none;
             line-height: 1.5;
             font-size: 15px;
+            flex: 1;
         }
-        li:before {
-            content: "☐";
-            position: absolute;
-            left: 0;
-            color: #333;
-            font-weight: normal;
-            font-size: 18px;
+        
+        .progress-bar {
+            background-color: rgba(255,255,255,0.2);
+            height: 8px;
+            border-radius: 10px;
+            margin-top: 15px;
+            overflow: hidden;
         }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: white;
+            transition: width 0.3s ease;
+            border-radius: 10px;
+        }
+        
+        .progress-text {
+            margin-top: 8px;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
         .footer {
             text-align: center;
             margin-top: 40px;
-            padding-top: 20px;
-            border-top: 2px solid #ecf0f1;
+            padding: 20px;
             color: #95a5a6;
             font-size: 14px;
+        }
+        
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 20px;
+            }
+            
+            h2 {
+                font-size: 16px;
+            }
+            
+            label {
+                font-size: 14px;
+            }
+            
+            button {
+                font-size: 12px;
+                padding: 8px 15px;
+            }
         }
     </style>
 </head>
 <body>
 
-<h1>&#128207; LISTA VIAGGIO</h1>
-<div class="subtitle"></div>
+<div class="container">
+    <div class="header">
+        <h1>&#128207; LISTA VIAGGIO</h1>
+        <
+        <div class="progress-text" id="progressText">0 / 0 completati (0%)</div>
+        <div class="controls">
+            <button onclick="toggleCompleted()">Mostra/Nascondi Completati</button>
+            <button onclick="resetCheckboxes()">Reset Tutto</button>
+        </div>
+        <div class="back-link">
+            <a href="index.html">← Torna alla Home</a>
+        </div>
+    </div>
 
-<h2><span class="section-icon">&#128085;</span>Abbigliamento</h2>
-<ul>
-    <li>Abbigliamento serale</li>
-    <li>Boxer / intimo</li>
-    <li>Calze leggere</li>
-    <li>Calze pesanti / trekking</li>
-    <li>Cargo / pantaloni</li>
-    <li>Cintura</li>
-    <li>Costume da bagno</li>
-    <li>Felpa</li>
-    <li>Gilet da Viaggio</li>
-    <li>Infradito/Pantofole</li>
-    <li>Magliette / t-shirt</li>
-    <li>Pantaloncini</li>
-    <li>Pantofole</li>
-    <li>Pigiama</li>
-    <li>Scaldacollo</li>
-    <li>Scarpe</li>
-    <li>Sovrapantaloni Impermeabili</li>
-</ul>
 
-<h2><span class="section-icon">&#128095;</span>Abbigliamento Sportivo e Accessori</h2>
-<ul>
-    <li>Calze sportive</li>
-    <li>Cambi completi per allenamento</li>
-    <li>Cintura</li>
-    <li>Elastici</li>
-    <li>Scarpe da palestra pulite</li>
-</ul>
 
-<h2><span class="section-icon">&#129406;</span>Abbigliamento Tecnico</h2>
-<ul>
-    <li>Ginocchiera</li>
-    <li>Guanti</li>
-    <li>Intimo termico</li>
-    <li>K-Way / Impermeabile lungo</li>
-    <li>Maglia ricambio post-trekking</li>
-    <li>Piumino 100g leggero</li>
-    <li>Scaldacollo</li>
-    <li>Scaldamani</li>
-</ul>
+        <h2><span class="section-icon">&#128085;</span>Abbigliamento</h2>
+        <ul>
+            <li><input type="checkbox" id="abb1" onchange="saveState()"><label for="abb1">Abbigliamento serale</label></li>
+            <li><input type="checkbox" id="abb2" onchange="saveState()"><label for="abb2">Boxer / intimo</label></li>
+            <li><input type="checkbox" id="abb3" onchange="saveState()"><label for="abb3">Calze leggere</label></li>
+            <li><input type="checkbox" id="abb4" onchange="saveState()"><label for="abb4">Calze pesanti / trekking</label></li>
+            <li><input type="checkbox" id="abb5" onchange="saveState()"><label for="abb5">Cargo / pantaloni</label></li>
+            <li><input type="checkbox" id="abb6" onchange="saveState()"><label for="abb6">Cintura</label></li>
+            <li><input type="checkbox" id="abb7" onchange="saveState()"><label for="abb7">Costume da bagno</label></li>
+            <li><input type="checkbox" id="abb8" onchange="saveState()"><label for="abb8">Felpa</label></li>
+            <li><input type="checkbox" id="abb9" onchange="saveState()"><label for="abb9">Gilet da Viaggio</label></li>
+            <li><input type="checkbox" id="abb10" onchange="saveState()"><label for="abb10">Infradito/Pantofole</label></li>
+            <li><input type="checkbox" id="abb11" onchange="saveState()"><label for="abb11">Magliette / t-shirt</label></li>
+            <li><input type="checkbox" id="abb12" onchange="saveState()"><label for="abb12">Pantaloncini</label></li>
+            <li><input type="checkbox" id="abb13" onchange="saveState()"><label for="abb13">Pantofole</label></li>
+            <li><input type="checkbox" id="abb14" onchange="saveState()"><label for="abb14">Pigiama</label></li>
+            <li><input type="checkbox" id="abb15" onchange="saveState()"><label for="abb15">Scaldacollo</label></li>
+            <li><input type="checkbox" id="abb16" onchange="saveState()"><label for="abb16">Scarpe</label></li>
+            <li><input type="checkbox" id="abb17" onchange="saveState()"><label for="abb17">Sovrapantaloni Impermeabili</label></li>
+        </ul>
 
-<h2><span class="section-icon">&#127957;</span>Accessori Outdoor</h2>
-<ul>
-    <li>Antizanzare</li>
-    <li>Coltellino Svizzero</li>
-    <li>Cuscino</li>
-    <li>Frontale</li>
-    <li>Lucchetto (per zaino o bici)</li>
-    <li>Materassino</li>
-    <li>Posate</li>
-    <li>Sacco a Pelo</li>
-    <li>Sacco lenzuolo</li>
-    <li>Scaldamani</li>
-</ul>
+        <h2><span class="section-icon">&#128095;</span>Abbigliamento Sportivo e Accessori</h2>
+        <ul>
+            <li><input type="checkbox" id="as1" onchange="saveState()"><label for="as1">Calze sportive</label></li>
+            <li><input type="checkbox" id="as2" onchange="saveState()"><label for="as2">Cambi completi per allenamento</label></li>
+            <li><input type="checkbox" id="as3" onchange="saveState()"><label for="as3">Cintura</label></li>
+            <li><input type="checkbox" id="as4" onchange="saveState()"><label for="as4">Elastici</label></li>
+            <li><input type="checkbox" id="as5" onchange="saveState()"><label for="as5">Scarpe da palestra pulite</label></li>
+        </ul>
 
-<h2><span class="section-icon">&#127890;</span>Accessori Viaggio</h2>
-<ul>
-    <li>Badge</li>
-    <li>Bandana o elastico per capelli</li>
-    <li>Benda occhi / mascherina</li>
-    <li>Bilancia Valigia</li>
-    <li>Borsa Extra Pieghevole</li>
-    <li>Cappello/Bandana</li>
-    <li>Crema solare</li>
-    <li>Elastici/Corda</li>
-    <li>Fotocamera (Batteria, Caricatore, Cavo, SD, Pennellino Lente, Tracolla, Borsa)</li>
-    <li>Impugnatura Smartphone</li>
-    <li>Laccio smartphone</li>
-    <li>Marsupio</li>
-    <li>Metal Pour / Jigger</li>
-    <li>Penna/Pennarello</li>
-    <li>Sacchi e Pompa sottovuoto</li>
-    <li>Sacco Lenzuolo</li>
-    <li>Tappi orecchie</li>
-</ul>
+        <h2><span class="section-icon">&#129406;</span>Abbigliamento Tecnico</h2>
+        <ul>
+            <li><input type="checkbox" id="atec1" onchange="saveState()"><label for="atec1">Ginocchiera</label></li>
+            <li><input type="checkbox" id="atec2" onchange="saveState()"><label for="atec2">Guanti</label></li>
+            <li><input type="checkbox" id="atec3" onchange="saveState()"><label for="atec3">Intimo termico</label></li>
+            <li><input type="checkbox" id="atec4" onchange="saveState()"><label for="atec4">K-Way / Impermeabile lungo</label></li>
+            <li><input type="checkbox" id="atec5" onchange="saveState()"><label for="atec5">Maglia ricambio post-trekking</label></li>
+            <li><input type="checkbox" id="atec6" onchange="saveState()"><label for="atec6">Piumino 100g leggero</label></li>
+            <li><input type="checkbox" id="atec7" onchange="saveState()"><label for="atec7">Scaldacollo</label></li>
+            <li><input type="checkbox" id="atec8" onchange="saveState()"><label for="atec8">Scaldamani</label></li>
+        </ul>
 
-<h2><span class="section-icon">&#9992;</span>Comfort e Extra Utili</h2>
-<ul>
-    <li>Benda Occhi Aereo</li>
-    <li>Bloc notes e penna</li>
-    <li>Borraccia</li>
-    <li>Bustine per alimenti</li>
-    <li>Chewing gum</li>
-    <li>Cuscino Collo</li>
-    <li>Fazzoletti</li>
-    <li>Libri / Lettura offline</li>
-    <li>Lucchetto per bagaglio</li>
-    <li>Occhiali da sole</li>
-    <li>Poncho / K-way leggero</li>
-    <li>Posate (plastica per evitare controlli)</li>
-    <li>Salviette umidificate</li>
-    <li>Snack e barrette</li>
-    <li>Snack proteici (EAA, barrette, intra-wo)</li>
-    <li>Spray o gel igienizzante</li>
-</ul>
+        <h2><span class="section-icon">&#127957;</span>Accessori Outdoor</h2>
+        <ul>
+            <li><input type="checkbox" id="ao1" onchange="saveState()"><label for="ao1">Antizanzare</label></li>
+            <li><input type="checkbox" id="ao2" onchange="saveState()"><label for="ao2">Coltellino Svizzero</label></li>
+            <li><input type="checkbox" id="ao3" onchange="saveState()"><label for="ao3">Cuscino</label></li>
+            <li><input type="checkbox" id="ao4" onchange="saveState()"><label for="ao4">Frontale</label></li>
+            <li><input type="checkbox" id="ao5" onchange="saveState()"><label for="ao5">Lucchetto (per zaino o bici)</label></li>
+            <li><input type="checkbox" id="ao6" onchange="saveState()"><label for="ao6">Materassino</label></li>
+            <li><input type="checkbox" id="ao7" onchange="saveState()"><label for="ao7">Posate</label></li>
+            <li><input type="checkbox" id="ao8" onchange="saveState()"><label for="ao8">Sacco a Pelo</label></li>
+            <li><input type="checkbox" id="ao9" onchange="saveState()"><label for="ao9">Sacco lenzuolo</label></li>
+            <li><input type="checkbox" id="ao10" onchange="saveState()"><label for="ao10">Scaldamani</label></li>
+        </ul>
 
-<h2><span class="section-icon">&#128179;</span>Documenti e Soldi</h2>
-<ul>
-    <li>Biglietti viaggio e ingressi</li>
-    <li>Carta d'identità o Passaporto</li>
-    <li>Copia digitale dei documenti</li>
-    <li>Portafoglio con contanti e carte</li>
-    <li>Portamonete</li>
-    <li>Ricevute di prenotazioni volo e primo hotel</li>
-    <li>Tessera sanitaria</li>
-</ul>
+        <h2><span class="section-icon">&#127890;</span>Accessori Viaggio</h2>
+        <ul>
+            <li><input type="checkbox" id="av1" onchange="saveState()"><label for="av1">Badge</label></li>
+            <li><input type="checkbox" id="av2" onchange="saveState()"><label for="av2">Bandana o elastico per capelli</label></li>
+            <li><input type="checkbox" id="av3" onchange="saveState()"><label for="av3">Benda occhi / mascherina</label></li>
+            <li><input type="checkbox" id="av4" onchange="saveState()"><label for="av4">Bilancia Valigia</label></li>
+            <li><input type="checkbox" id="av5" onchange="saveState()"><label for="av5">Borsa Extra Pieghevole</label></li>
+            <li><input type="checkbox" id="av6" onchange="saveState()"><label for="av6">Cappello/Bandana</label></li>
+            <li><input type="checkbox" id="av7" onchange="saveState()"><label for="av7">Crema solare</label></li>
+            <li><input type="checkbox" id="av8" onchange="saveState()"><label for="av8">Elastici/Corda</label></li>
+            <li><input type="checkbox" id="av9" onchange="saveState()"><label for="av9">Fotocamera (Batteria, Caricatore, Cavo, SD, Pennellino Lente, Tracolla, Borsa)</label></li>
+            <li><input type="checkbox" id="av10" onchange="saveState()"><label for="av10">Impugnatura Smartphone</label></li>
+            <li><input type="checkbox" id="av11" onchange="saveState()"><label for="av11">Laccio smartphone</label></li>
+            <li><input type="checkbox" id="av12" onchange="saveState()"><label for="av12">Marsupio</label></li>
+            <li><input type="checkbox" id="av13" onchange="saveState()"><label for="av13">Metal Pour / Jigger</label></li>
+            <li><input type="checkbox" id="av14" onchange="saveState()"><label for="av14">Penna/Pennarello</label></li>
+            <li><input type="checkbox" id="av15" onchange="saveState()"><label for="av15">Sacchi e Pompa sottovuoto</label></li>
+            <li><input type="checkbox" id="av16" onchange="saveState()"><label for="av16">Sacco Lenzuolo</label></li>
+            <li><input type="checkbox" id="av17" onchange="saveState()"><label for="av17">Tappi orecchie</label></li>
+        </ul>
 
-<h2><span class="section-icon">&#128241;</span>Elettronica</h2>
-<ul>
-    <li>Adattatore OTG per Telefono + USB</li>
-    <li>Adattatore universale prese</li>
-    <li>Altoparlante portatile</li>
-    <li>Auricolari o cuffie</li>
-    <li>Caricabatterie e cavi (type-c, usb, lightning, uscita usb e type-c)</li>
-    <li>Powerbank</li>
-    <li>Tablet con film/manga offline</li>
-    <li>Telefono / Smartphone</li>
-    <li>Treppiede / Supporto tablet</li>
-</ul>
+        <h2><span class="section-icon">&#9992;</span>Comfort e Extra Utili</h2>
+        <ul>
+            <li><input type="checkbox" id="ce1" onchange="saveState()"><label for="ce1">Benda Occhi Aereo</label></li>
+            <li><input type="checkbox" id="ce2" onchange="saveState()"><label for="ce2">Bloc notes e penna</label></li>
+            <li><input type="checkbox" id="ce3" onchange="saveState()"><label for="ce3">Borraccia</label></li>
+            <li><input type="checkbox" id="ce4" onchange="saveState()"><label for="ce4">Bustine per alimenti</label></li>
+            <li><input type="checkbox" id="ce5" onchange="saveState()"><label for="ce5">Chewing gum</label></li>
+            <li><input type="checkbox" id="ce6" onchange="saveState()"><label for="ce6">Cuscino Collo</label></li>
+            <li><input type="checkbox" id="ce7" onchange="saveState()"><label for="ce7">Fazzoletti</label></li>
+            <li><input type="checkbox" id="ce8" onchange="saveState()"><label for="ce8">Libri / Lettura offline</label></li>
+            <li><input type="checkbox" id="ce9" onchange="saveState()"><label for="ce9">Lucchetto per bagaglio</label></li>
+            <li><input type="checkbox" id="ce10" onchange="saveState()"><label for="ce10">Occhiali da sole</label></li>
+            <li><input type="checkbox" id="ce11" onchange="saveState()"><label for="ce11">Poncho / K-way leggero</label></li>
+            <li><input type="checkbox" id="ce12" onchange="saveState()"><label for="ce12">Posate (plastica per evitare controlli)</label></li>
+            <li><input type="checkbox" id="ce13" onchange="saveState()"><label for="ce13">Salviette umidificate</label></li>
+            <li><input type="checkbox" id="ce14" onchange="saveState()"><label for="ce14">Snack e barrette</label></li>
+            <li><input type="checkbox" id="ce15" onchange="saveState()"><label for="ce15">Snack proteici (EAA, barrette, intra-wo)</label></li>
+            <li><input type="checkbox" id="ce16" onchange="saveState()"><label for="ce16">Spray o gel igienizzante</label></li>
+        </ul>
 
-<h2><span class="section-icon">&#129489;</span>Igiene e Cura Personale</h2>
-<ul>
-    <li>Asciugamano viaggio</li>
-    <li>Burro cacao</li>
-    <li>Cera Capelli</li>
-    <li>Cerotti nasali</li>
-    <li>Dentifricio</li>
-    <li>Deodorante</li>
-    <li>Kit pronto soccorso</li>
-    <li>Mascherina</li>
-    <li>Medicine personali</li>
-    <li>Profumo</li>
-    <li>Rasoio</li>
-    <li>Sapone/Shampoo</li>
-    <li>Spazzola</li>
-    <li>Spazzolino</li>
-    <li>Spray cattura odori</li>
-    <li>Telo spiaggia</li>
-</ul>
+        <h2><span class="section-icon">&#128179;</span>Documenti e Soldi</h2>
+        <ul>
+            <li><input type="checkbox" id="doc1" onchange="saveState()"><label for="doc1">Biglietti viaggio e ingressi</label></li>
+            <li><input type="checkbox" id="doc2" onchange="saveState()"><label for="doc2">Carta d'identità o Passaporto</label></li>
+            <li><input type="checkbox" id="doc3" onchange="saveState()"><label for="doc3">Copia digitale dei documenti</label></li>
+            <li><input type="checkbox" id="doc4" onchange="saveState()"><label for="doc4">Portafoglio con contanti e carte</label></li>
+            <li><input type="checkbox" id="doc5" onchange="saveState()"><label for="doc5">Portamonete</label></li>
+            <li><input type="checkbox" id="doc6" onchange="saveState()"><label for="doc6">Ricevute di prenotazioni volo e primo hotel</label></li>
+            <li><input type="checkbox" id="doc7" onchange="saveState()"><label for="doc7">Tessera sanitaria</label></li>
+        </ul>
 
-<h2><span class="section-icon">&#128703;</span>Igiene Post-Allenamento</h2>
-<ul>
-    <li>Accappatoio</li>
-    <li>Asciugamano palestra</li>
-    <li>Bagnoschiuma + shampoo travel</li>
-    <li>Ciabatte doccia</li>
-    <li>Sacchetto vestiti sudati</li>
-</ul>
+        <h2><span class="section-icon">&#128241;</span>Elettronica</h2>
+        <ul>
+            <li><input type="checkbox" id="el1" onchange="saveState()"><label for="el1">Adattatore OTG per Telefono + USB</label></li>
+            <li><input type="checkbox" id="el2" onchange="saveState()"><label for="el2">Adattatore universale prese</label></li>
+            <li><input type="checkbox" id="el3" onchange="saveState()"><label for="el3">Altoparlante portatile</label></li>
+            <li><input type="checkbox" id="el4" onchange="saveState()"><label for="el4">Auricolari o cuffie</label></li>
+            <li><input type="checkbox" id="el5" onchange="saveState()"><label for="el5">Caricabatterie e cavi (type-c, usb, lightning, uscita usb e type-c)</label></li>
+            <li><input type="checkbox" id="el6" onchange="saveState()"><label for="el6">Powerbank</label></li>
+            <li><input type="checkbox" id="el7" onchange="saveState()"><label for="el7">Tablet con film/manga offline</label></li>
+            <li><input type="checkbox" id="el8" onchange="saveState()"><label for="el8">Telefono / Smartphone</label></li>
+            <li><input type="checkbox" id="el9" onchange="saveState()"><label for="el9">Treppiede / Supporto tablet</label></li>
+        </ul>
 
-<h2><span class="section-icon">&#129490;</span>Integratori</h2>
-<ul>
-    <li>BCAA / EAA</li>
-    <li>Creatina</li>
-    <li>Proteine in polvere + shaker</li>
-    <li>Sali minerali</li>
-</ul>
+        <h2><span class="section-icon">&#129489;</span>Igiene e Cura Personale</h2>
+        <ul>
+            <li><input type="checkbox" id="ig1" onchange="saveState()"><label for="ig1">Asciugamano viaggio</label></li>
+            <li><input type="checkbox" id="ig2" onchange="saveState()"><label for="ig2">Burro cacao</label></li>
+            <li><input type="checkbox" id="ig3" onchange="saveState()"><label for="ig3">Cera Capelli</label></li>
+            <li><input type="checkbox" id="ig4" onchange="saveState()"><label for="ig4">Cerotti nasali</label></li>
+            <li><input type="checkbox" id="ig5" onchange="saveState()"><label for="ig5">Dentifricio</label></li>
+            <li><input type="checkbox" id="ig6" onchange="saveState()"><label for="ig6">Deodorante</label></li>
+            <li><input type="checkbox" id="ig7" onchange="saveState()"><label for="ig7">Kit pronto soccorso</label></li>
+            <li><input type="checkbox" id="ig8" onchange="saveState()"><label for="ig8">Mascherina</label></li>
+            <li><input type="checkbox" id="ig9" onchange="saveState()"><label for="ig9">Medicine personali</label></li>
+            <li><input type="checkbox" id="ig10" onchange="saveState()"><label for="ig10">Profumo</label></li>
+            <li><input type="checkbox" id="ig11" onchange="saveState()"><label for="ig11">Rasoio</label></li>
+            <li><input type="checkbox" id="ig12" onchange="saveState()"><label for="ig12">Sapone/Shampoo</label></li>
+            <li><input type="checkbox" id="ig13" onchange="saveState()"><label for="ig13">Spazzola</label></li>
+            <li><input type="checkbox" id="ig14" onchange="saveState()"><label for="ig14">Spazzolino</label></li>
+            <li><input type="checkbox" id="ig15" onchange="saveState()"><label for="ig15">Spray cattura odori</label></li>
+            <li><input type="checkbox" id="ig16" onchange="saveState()"><label for="ig16">Telo spiaggia</label></li>
+        </ul>
 
-<h2><span class="section-icon">&#127890;</span>Organizzazione e Zaini</h2>
-<ul>
-    <li>Portamonete</li>
-    <li>Sacca per panni sporchi</li>
-    <li>Sacchetti per cibo</li>
-    <li>Sacchetti per panni sporchi</li>
-    <li>Sacchetto Spazzatura</li>
-    <li>Smacchiatore</li>
-    <li>Zainetto / Borsa richiudibile minimal</li>
-</ul>
+        <h2><span class="section-icon">&#128703;</span>Igiene Post-Allenamento</h2>
+        <ul>
+            <li><input type="checkbox" id="ipa1" onchange="saveState()"><label for="ipa1">Accappatoio</label></li>
+            <li><input type="checkbox" id="ipa2" onchange="saveState()"><label for="ipa2">Asciugamano palestra</label></li>
+            <li><input type="checkbox" id="ipa3" onchange="saveState()"><label for="ipa3">Bagnoschiuma + shampoo travel</label></li>
+            <li><input type="checkbox" id="ipa4" onchange="saveState()"><label for="ipa4">Ciabatte doccia</label></li>
+            <li><input type="checkbox" id="ipa5" onchange="saveState()"><label for="ipa5">Sacchetto vestiti sudati</label></li>
+        </ul>
 
-<h2><span class="section-icon">&#128138;</span>Salute</h2>
-<ul>
-    <li>Medicine personali, Probiotici, Enzimi</li>
-</ul>
+        <h2><span class="section-icon">&#129490;</span>Integratori</h2>
+        <ul>
+            <li><input type="checkbox" id="int1" onchange="saveState()"><label for="int1">BCAA / EAA</label></li>
+            <li><input type="checkbox" id="int2" onchange="saveState()"><label for="int2">Creatina</label></li>
+            <li><input type="checkbox" id="int3" onchange="saveState()"><label for="int3">Proteine in polvere + shaker</label></li>
+            <li><input type="checkbox" id="int4" onchange="saveState()"><label for="int4">Sali minerali</label></li>
+        </ul>
+
+        <h2><span class="section-icon">&#127890;</span>Organizzazione e Zaini</h2>
+        <ul>
+            <li><input type="checkbox" id="org1" onchange="saveState()"><label for="org1">Portamonete</label></li>
+            <li><input type="checkbox" id="org2" onchange="saveState()"><label for="org2">Sacca per panni sporchi</label></li>
+            <li><input type="checkbox" id="org3" onchange="saveState()"><label for="org3">Sacchetti per cibo</label></li>
+            <li><input type="checkbox" id="org4" onchange="saveState()"><label for="org4">Sacchetti per panni sporchi</label></li>
+            <li><input type="checkbox" id="org5" onchange="saveState()"><label for="org5">Sacchetto Spazzatura</label></li>
+            <li><input type="checkbox" id="org6" onchange="saveState()"><label for="org6">Smacchiatore</label></li>
+            <li><input type="checkbox" id="org7" onchange="saveState()"><label for="org7">Zainetto / Borsa richiudibile minimal</label></li>
+        </ul>
+
+        <h2><span class="section-icon">&#128138;</span>Salute</h2>
+        <ul>
+            <li><input type="checkbox" id="sal1" onchange="saveState()"><label for="sal1">Medicine personali, Probiotici, Enzimi</label></li>
+        </ul>
+
+    
+    </div>
+</div>
+
+<script>
+    let hideCompleted = true;
+    
+    // Carica lo stato salvato al caricamento della pagina
+    window.onload = function() {
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(checkbox => {
+            const saved = localStorage.getItem('lista_' + checkbox.id);
+            if (saved === 'true') {
+                checkbox.checked = true;
+                if (hideCompleted) {
+                    checkbox.parentElement.classList.add('completed');
+                }
+            }
+        });
+        updateProgress();
+    };
+
+    // Salva lo stato quando cambia una checkbox
+    function saveState() {
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(checkbox => {
+            localStorage.setItem('lista_' + checkbox.id, checkbox.checked);
+            if (checkbox.checked && hideCompleted) {
+                checkbox.parentElement.classList.add('completed');
+            } else {
+                checkbox.parentElement.classList.remove('completed');
+            }
+        });
+        updateProgress();
+    }
+
+    // Resetta tutte le checkbox
+    function resetCheckboxes() {
+        if (confirm('Sei sicuro di voler resettare tutte le caselle?')) {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = false;
+                checkbox.parentElement.classList.remove('completed');
+                localStorage.removeItem('lista_' + checkbox.id);
+            });
+            updateProgress();
+        }
+    }
+    
+    // Mostra/nascondi elementi completati
+    function toggleCompleted() {
+        hideCompleted = !hideCompleted;
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(checkbox => {
+            if (checkbox.checked) {
+                if (hideCompleted) {
+                    checkbox.parentElement.classList.add('completed');
+                } else {
+                    checkbox.parentElement.classList.remove('completed');
+                }
+            }
+        });
+    }
+    
+    // Aggiorna barra progresso
+    function updateProgress() {
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const total = checkboxes.length;
+        const checked = Array.from(checkboxes).filter(cb => cb.checked).length;
+        const percentage = Math.round((checked / total) * 100);
+        
+        document.getElementById('progressBar').style.width = percentage + '%';
+        document.getElementById('progressText').textContent = `${checked} / ${total} completati (${percentage}%)`;
+    }
+</script>
+
 </body>
 </html>
