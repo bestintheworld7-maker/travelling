@@ -179,6 +179,37 @@
                 padding: 8px 15px;
             }
         }
+body{
+  background-color:#ffffff;
+  font-family: Arial, sans-serif;
+  max-width: 900px;
+  margin: 24px auto;
+  padding: 16px;
+  text-align: center;
+}
+
+.card-container{
+  display:flex;
+  justify-content:center;
+  gap:16px;
+  flex-wrap:wrap;
+  margin-top:24px;
+}
+
+.card{
+  width: 320px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 600px){
+  body{ margin: 0 auto; padding: 14px; }
+  h1{ font-size: 24px; }
+  p{ font-size: 16px; }
+  .card{ width: 100%; padding: 28px 20px; }
+  .icon{ font-size: 52px; }
+}
+
     </style>
 </head>
 <body>
