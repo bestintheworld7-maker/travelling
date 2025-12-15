@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Giappone</title>
+
+  <style>
+    body{
+      background-color:#ffffff;
+      font-family: Arial, sans-serif;
+      max-width: 900px;
+      margin: 24px auto;
+      padding: 16px;
+      text-align: center;
+    }
+
+    h1{
+      color:#2c3e50;
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    p{
+      font-size: 18px;
+      color:#7f8c8d;
+      margin-top: 0;
+    }
+
+    .card-container{
+      display:flex;
+      justify-content:center;
+      gap:16px;
+      flex-wrap:wrap;
+      margin-top:24px;
+    }
+
+    .card{
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      border-radius:15px;
+      padding:40px 30px;
+      width: 320px;
+      max-width: 100%;
+      box-sizing: border-box;
+      box-shadow:0 10px 30px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease;
+      text-decoration:none;
+      color:white;
+      display:block;
+    }
+
+    .card:hover{ transform: translateY(-10px); }
+
+    .icon{ font-size: 60px; line-height: 1; }
+    .card h2{ font-size: 24px; margin: 18px 0 10px; }
+    .card p{ font-size: 16px; opacity: 0.9; margin: 0; color: white; }
+
+    .back-link{
+      margin-top: 16px;
+      display: inline-block;
+      text-decoration: none;
+      color: #2c3e50;
+      font-size: 14px;
+      opacity: 0.85;
+    }
+
+    @media (max-width: 600px){
+      h1{ font-size: 24px; }
+      p{ font-size: 16px; }
+      .card{ width: 100%; padding: 28px 20px; }
+      .icon{ font-size: 52px; }
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Giappone</h1>
+  <p>Seleziona una sezione</p>
+
+  <div class="card-container">
+    <a href="mezzi-giappone.html" class="card">
+      <div class="icon">🚆</div>
+      <h2>MEZZI DI TRASPORTO</h2>
+      <p>Treni, metro, bus, IC card e pass</p>
+    </a>
+  </div>
+
+  <a class="back-link" href="index.html">← Torna alla Home</a>
+</body>
+</html
