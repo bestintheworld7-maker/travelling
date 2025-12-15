@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Organizzare un Viaggio</title>
+  <style>
+    body{
+      background-color:#ffffff;
+      font-family: Arial, sans-serif;
+      max-width: 900px;
+      margin: 50px auto;
+      padding: 20px;
+      text-align: center;
+    }
+    h1{ color:#2c3e50; font-size:32px; margin-bottom: 10px; }
+    p{ font-size:18px; color:#7f8c8d; margin-top: 0; }
+    .card-container{
+      display:flex;
+      justify-content:center;
+      gap:30px;
+      flex-wrap:wrap;
+      margin-top:40px;
+    }
+    .card{
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius:15px;
+      padding:40px 30px;
+      width:320px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.2);
+      transition: transform .3s ease;
+      text-decoration:none;
+      color:#fff;
+      display:block;
+    }
+    .card:hover{ transform: translateY(-10px); }
+    .card h2{ font-size:22px; margin:20px 0 10px; }
+    .card p{ font-size:16px; opacity:.9; color:#fff; margin:0; }
+    .icon{ font-size:60px; line-height:1; }
+    .card-2{ background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+    body{
+  background-color:#ffffff;
+  font-family: Arial, sans-serif;
+  max-width: 900px;
+  margin: 24px auto;
+  padding: 16px;
+  text-align: center;
+}
+
+.card-container{
+  display:flex;
+  justify-content:center;
+  gap:16px;
+  flex-wrap:wrap;
+  margin-top:24px;
+}
+
+.card{
+  width: 320px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 600px){
+  body{ margin: 0 auto; padding: 14px; }
+  h1{ font-size: 24px; }
+  p{ font-size: 16px; }
+  .card{ width: 100%; padding: 28px 20px; }
+  .icon{ font-size: 52px; }
+}
+  </style>
+</head>
+<body>
+  <h1>Organizzare un Viaggio</h1>
+  <p>Seleziona la sezione</p>
+
+  <div class="card-container">
+    <a href="menu-viaggi.html" class="card card-1">
+      <div class="icon">🧳</div>
+      <h2>PREPARAZIONE AL VIAGGIO</h2>
+      <p>Vai alle checklist generali</p>
+    </a>
+
+    <a href="menu-giappone.html" class="card card-2">
+      <div class="icon">🗾</div>
+      <h2>GIAPPONE</h2>
+      <p>Menu dedicato al Giappone</p>
+    </a>
+  </div>
+</body>
+</html>
